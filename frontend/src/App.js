@@ -1,10 +1,16 @@
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Calendar from './components/ CalendarView/Calendar';
+import Summary from './components/SummaryPage/Summary';
 
 function App() {
   return (
-    <div className="App">
-     <h1 className="text-2xl font-bold mb-4 text-blue-500">hello tailwind css</h1>
-     
-    </div>
+    <Router>
+    <Routes>
+      <Route exact path="/" element={<Calendar />} />
+     <Route path="/Summary" element={<Summary />} />
+    </Routes>
+  </Router>
   );
 }
 
