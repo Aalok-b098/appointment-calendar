@@ -2,8 +2,12 @@ import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { CheckIcon } from "@heroicons/react/24/solid";
 
-const ViewDelete = ({ onClose, open, onDelete }) => {
+const ViewDelete = ({ onClose, open, onDelete, onEdit }) => {
   const cancelButtonRef = useRef(null);
+  const onPressEdit = () => {
+    onEdit()
+    onClose()
+  }
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -62,6 +66,7 @@ const ViewDelete = ({ onClose, open, onDelete }) => {
                 </div>
                 <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                   <button
+                    onClick={onPressEdit}
                     type="button"
                     className="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
                   >
