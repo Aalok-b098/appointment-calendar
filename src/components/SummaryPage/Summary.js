@@ -1,7 +1,22 @@
-import React from 'react'
+import React, { useState,useEffect } from 'react'
 
 
 const Summary = () => {
+  const [upcomingEventsList, setUpcomingEventsList] = useState([])
+
+  useEffect(() => {
+    const getUpcomingAppointmentApiCall = async () => {
+      try {
+        const eventsData = await getUpcomingAppointmentApiCall();
+        setUpcomingEventsList(eventsData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    getUpcomingAppointmentApiCall();
+  }, []);
+  
   return (
     <div className='flex flex-col items-center'>
     <div className='font-bold text-xl mt-3'>Summary</div>

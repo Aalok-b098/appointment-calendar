@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -9,7 +9,7 @@ const Calendar = () => {
   const calendarComponentRef = useRef(null);
 
   const [calendarWeekends, setCalendarWeekends] = useState(true);
-  
+  const [appointmentList,setAppointmentList]= useState([])
     const [calendarEvents, setCalendarEvents] = useState([
       {
         id: 0,
@@ -108,6 +108,18 @@ const Calendar = () => {
       }
     ]);
 
+    useEffect(() => {
+      const getAppointmentApiCall = async () => {
+        try {
+          const eventsData = await getAppointmentApiCall();
+          setAppointmentList(eventsData);
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      };
+  
+      getAppointmentApiCall();
+    }, []);
 
   const toggleWeekends = () => {
     setCalendarWeekends(!calendarWeekends);
@@ -155,7 +167,6 @@ const Calendar = () => {
       <div className="demo-app-top">
         <button onClick={toggleWeekends}>toggle weekends</button>&nbsp;
         <button onClick={gotoPast}>go to a date in the past</button>
-        &nbsp; (Click week, add event and drag and drop event)
       </div>
       <div className="demo-app-calendar">
         <FullCalendar

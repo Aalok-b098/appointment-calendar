@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Link } from "react-router-dom";
+import { addAppointmentService } from "../../services/api";
 
 const AddEvent = () => {
   const [patientName, setPatientName] = useState("");
@@ -24,6 +25,20 @@ const AddEvent = () => {
     setPatientName(patientName);
     setDoctorName(doctorName);
   };
+
+    const handleAddAppointment = async () => {
+      try {
+        const eventData = {
+          title: 'New Event',
+          start: new Date(), 
+        };
+  
+        const addedEvent = await addAppointmentService(eventData);
+      } catch (error) {
+        console.error('Error adding event:', error.message);
+      }
+    };
+  
 
   return (
     <div
