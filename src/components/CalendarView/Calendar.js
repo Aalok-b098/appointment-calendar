@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -6,12 +6,27 @@ import interactionPlugin from "@fullcalendar/interaction";
 import {Link} from "react-router-dom";
 import AddEvent from "./AddAppointment";
 import DialogBox from "./DialogBox";
+import { getAppointmentService } from "../../services/api";
 
 const Calendar = () => {
   const calendarComponentRef = useRef(null);
   const [dialogBox, setDialogBox] = useState(false);
   const [calendarWeekends, setCalendarWeekends] = useState(true);
-  
+  const [appointmentList, setAppointmentList] = useState([]);
+
+  useEffect(() => {
+    const getAppointmentApiCall = async () => {
+      try {
+        const eventsData = await getAppointmentService();
+        setAppointmentList(eventsData.data);  
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    getAppointmentApiCall();
+  }, []);
+
     const [calendarEvents, setCalendarEvents] = useState([
       {
         id: 0,
