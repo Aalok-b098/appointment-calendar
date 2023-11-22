@@ -42,9 +42,9 @@ const AddEvent = ({ closeModal, manuallyAddAppointment }) => {
       style={{ zIndex: 4 }}
     >
       <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
-        <div className="mt-3 text-center">
-          <div className="mx-auto flex items-center justify-center h-12 w-12 ">
-            <h3 className="text-lg font-medium text-gray-900">
+        <div className="mt-3">
+          <div className="mx-auto">
+            <h3 className="text-2xl text-center font-bold text-gray-900">
               Add Appointment
             </h3>
           </div>
@@ -72,35 +72,37 @@ const AddEvent = ({ closeModal, manuallyAddAppointment }) => {
                   className="mt-1 p-2 block w-full rounded-md border-gray-300 bg-gray-50 dark:bg-gray-300 focus:border-green-500 focus:ring-green-500"
                 />
               </div>
-              <div className="flex justify-between">
-                <label className="block text-sm font-medium text-gray-700 mt-3">
-                  Select Day
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700">
+                  Select Date & Time
                 </label>
-                <DatePicker
-                  className="mt-1 p-2 block w-full rounded-md border-gray-300 bg-gray-50 dark:bg-gray-300 focus:border-green-500 focus:ring-green-500"
-                  selected={selectedDay}
-                  showTimeSelect
-                  onChange={handleDateChange}
-                  dateFormat="dd/MM/yyyy"
-                  isClearable
-                  showYearDropdown
-                  scrollableYearDropdown
-                  yearDropdownItemNumber={15}
-                />
+                <div className="w-full">
+                  <DatePicker
+                    className="mt-1 p-2 block w-full rounded-md border-gray-300 bg-gray-50 dark:bg-gray-300 focus:border-green-500 focus:ring-green-500"
+                    selected={selectedDay}
+                    showTimeSelect
+                    onChange={handleDateChange}
+                    dateFormat="dd/MM/yyyy"
+                    isClearable
+                    showYearDropdown
+                    scrollableYearDropdown
+                    yearDropdownItemNumber={15}
+                  />
+                </div>
               </div>
             </div>
-            <div className="items-center px-4 py-3">
+            <div className="items-center flex gap-2 px-4 py-3">
               <button
                 onClick={handleAddAppointment}
                 type="submit"
-                className="px-4 py-2 bg-green-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-300"
+                className="px-4 py-2 bg-sky-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-green-300"
               >
                 Add Event
               </button>
               <button
                 type="button"
                 onClick={closeModal}
-                className="mt-2 px-4 py-2 bg-red-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-300"
+                className="px-4 py-2 bg-red-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-300"
               >
                 Close
               </button>
