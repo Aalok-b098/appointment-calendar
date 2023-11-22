@@ -1,19 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {
   addAppointmentService,
   getAppointmentService,
+  updateAppointmentService,
 } from "../../services/api";
 import Toastify from "../Toastify/Toastify";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const AddEvent = ({ closeModal, onEdit }) => {
+const AddEvent = ({ closeModal, isEdit, setIsEdit, getAppointmentApiCall }) => {
   const [patientName, setPatientName] = useState("");
   const [title, setTitle] = useState("");
-
   const [selectedDay, setSelectedDay] = useState(null);
+
+  useEffect(() => {
+    if (isEdit) {
+      setPatientName(isEdit?.patientName);
+      setTitle(isEdit?.title);
+      setSelectedDay(isEdit?.selectedDay);
+    }
+  }, []);
 
   const handleDateChange = (date) => {
     setSelectedDay(date);
@@ -27,29 +35,32 @@ const AddEvent = ({ closeModal, onEdit }) => {
 
   const handleAddAppointment = async () => {
     try {
-      // Check if all required fields are filled
-      if (!patientName || !title || !selectedDay) {
+       // Check if all required fields are filled
+       if (!patientName || !title || !selectedDay) {
         toast.error("Please fill in all fields.");
-        return false;
+        return;
+      } 
+      const eventData = {
+        title: title,
+        patientName: patientName,
+        start: selectedDay,
+      };
+      if (isEdit) {
+        const editEvent = await updateAppointmentService(
+          isEdit?._id,
+          eventData
+        );
+        toast.success(editEvent?.message);
       } else {
-        const eventData = {
-          title: title,
-          patientName: patientName,
-          start: selectedDay,
-        };
-
-        const addedEvent = await addAppointmentService(eventData);
-
-        if (addedEvent?.success) {
-          toast.success(addedEvent?.message);
-          getAppointmentService();
-          closeModal();
-        }
-
+        const addEvent = await addAppointmentService(eventData);
+        toast.success(addEvent?.message);
       }
-
+      closeModal();
+      setIsEdit(null);
+      getAppointmentApiCall();
     } catch (error) {
-      console.error("Error adding event:", error.message);
+      toast.error(error?.message);
+      console.error("Error adding event:", error);
     }
   };
   return (
@@ -84,7 +95,7 @@ const AddEvent = ({ closeModal, onEdit }) => {
         <div className="mt-3 text-center">
           <div className="mx-auto flex items-center justify-center h-12 w-12 ">
             <h3 className="text-lg font-medium text-gray-900">
-              Add Appointment
+              {isEdit ? "Edit Appointment" : "Add Appointment"}
             </h3>
           </div>
           <form onSubmit={handleSubmit}>
@@ -136,7 +147,7 @@ const AddEvent = ({ closeModal, onEdit }) => {
                 type="submit"
                 className="px-4 py-2 bg-sky-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-green-300"
               >
-                Add Event
+                  {isEdit ? "Update" : "Add"}
               </button>
               <button
                 type="button"

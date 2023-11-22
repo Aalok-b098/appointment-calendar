@@ -8,6 +8,8 @@ import DialogBox from "./DialogBox";
 import {
   deleteAppointmentService,
   getAppointmentService,
+  getParticularAppointmentService,
+  updateAppointmentService,
 } from "../../services/api";
 import ViewDelete from "./ViewDelete";
 import { toast } from "react-toastify";
@@ -18,28 +20,30 @@ const Calendar = () => {
   const [calendarWeekends, setCalendarWeekends] = useState(true);
   const [appointmentList, setAppointmentList] = useState([]);
   const [manuallyAddAppointment, setManuallyAddAppointment] = useState([]);
-
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isOpenDelete, setIsOpenDelete] = useState(false);
   const [appointmentId, setApointmentId] = useState(null);
+  const [editData,setEditData]= useState(null)
+  const getAppointmentApiCall = async () => {
+    try {
+      const eventsData = await getAppointmentService();
+      setAppointmentList(eventsData?.data?.appointments);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   useEffect(() => {
-    const getAppointmentApiCall = async () => {
-      try {
-        const eventsData = await getAppointmentService();
-        setAppointmentList(eventsData?.data?.appointments);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
     getAppointmentApiCall();
   }, []);
+
+
   const handleOPenModal = () => {
     setIsModalOpen(true);
   };
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    setEditData(null)
   };
   const handleCloseDelete = () => {
     setIsOpenDelete(false);
@@ -86,13 +90,23 @@ const Calendar = () => {
     const eventId = info.event._def.extendedProps._id;
     setApointmentId(eventId);
   };
+  
+  const handleEditAppointment = async () => {
+    try {
+      const data = await getParticularAppointmentService(appointmentId);
+      setEditData(data.data)
+      handleOPenModal()
+    } catch (error) {
+      console.error("Error deleting appointment:", error.message);
+    }
+  };
 
   const handleDeleteAppointment = async () => {
     try {
       const data = await deleteAppointmentService(appointmentId);
+      getAppointmentApiCall()
       setApointmentId(null);
       handleCloseDelete()
-      getAppointmentService()
       toast.success(data?.message)
     } catch (error) {
       console.error("Error deleting appointment:", error.message);
@@ -137,8 +151,10 @@ const Calendar = () => {
           />
           {isModalOpen && (
             <AddEvent
+              isEdit={editData}
+              setIsEdit={setEditData}
               closeModal={handleCloseModal}
-              manuallyAddAppointment={manuallyAddAppointment}
+              getAppointmentApiCall={getAppointmentApiCall}
             />
           )}
           {dialogBox && (
@@ -146,6 +162,7 @@ const Calendar = () => {
               onClose={handleCloseDialogBox}
               open={dialogBox}
               openAddModal={handleOPenModal}
+              
             />
           )}
           {isOpenDelete && (
@@ -153,7 +170,7 @@ const Calendar = () => {
               onClose={handleCloseDelete}
               open={isOpenDelete}
               onDelete={handleDeleteAppointment}
-              onEdit={handleOPenModal}
+              onEdit={handleEditAppointment}
             />
           )}
         </div>
