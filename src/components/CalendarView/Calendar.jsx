@@ -3,7 +3,6 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import { Link } from "react-router-dom";
 import AddEvent from "./AddAppointment";
 import DialogBox from "./DialogBox";
 import {
@@ -43,7 +42,7 @@ const Calendar = () => {
     setIsModalOpen(false);
   };
   const handleCloseDelete = () => {
-      setIsOpenDelete(false);
+    setIsOpenDelete(false);
   };
 
   const toggleWeekends = () => {
@@ -74,7 +73,7 @@ const Calendar = () => {
   };
 
   const handleEventDrop = (info) => {
-    
+
     const { start } = info.oldEvent._instance.range;
     const { start: newStart } = info.event._instance.range;
     if (new Date(start).getDate() === new Date(newStart).getDate()) {
@@ -90,7 +89,7 @@ const Calendar = () => {
 
   const handleDeleteAppointment = async () => {
     try {
-     const data = await deleteAppointmentService(appointmentId);
+      const data = await deleteAppointmentService(appointmentId);
       setApointmentId(null);
       handleCloseDelete()
       getAppointmentService()
@@ -101,33 +100,18 @@ const Calendar = () => {
   };
   return (
     <>
-      <div className="bg-sky-500 px-4 py-2 mb-4">
-        <div className="mx-auto max-w-[1150px] px-4">
-          <div className="flex items-center justify-between">
-            <div className="font-bold text-xl text-white">Calendar</div>
-            <div className="flex justify-end gap-2">
-              <button
-                className="bg-white hover:bg-gray-100 text-sky-500 font-bold py-2 px-4 rounded"
-                onClick={handleOPenModal}
-              >
-                Add Appointment
-              </button>
-              <Link to="/summary">
-                <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                  Summary
-                </button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-
 
       <div className="demo-app mb-6">
         <div className="demo-app-top flex items-center justify-center gap-3">
           <button className="bg-sky-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded" onClick={toggleWeekends}>Toggle Weekends</button>
           <button className="bg-sky-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded" onClick={gotoPast}>Go to a date in the past</button>
           (Click week, add event and drag and drop event)
+          <button
+            className="bg-sky-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded"
+            onClick={handleOPenModal}
+          >
+            Add Appointment
+          </button>
         </div>
         <div className="demo-app-calendar">
           <FullCalendar
