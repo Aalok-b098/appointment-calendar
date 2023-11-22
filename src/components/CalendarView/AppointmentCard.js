@@ -1,16 +1,14 @@
-import React from 'react';
+import React from "react";
 
 const EventCard = ({ event, onDelete, onUpdate }) => {
-  const handleDelete = () => {
-  };
+  const handleDelete = () => {};
 
-  const handleUpdate = () => {
-  };
+  const handleUpdate = () => {};
 
   return (
     <div className="event-card justify-between flex">
       <div>{event.title}</div>
-      <div className='flex justify-end'>
+      <div className="flex justify-end">
         <button className="text-sm mx-2" onClick={handleDelete}>
           <svg
             className="h-4 w-4 text-red-500"
@@ -44,7 +42,6 @@ const EventCard = ({ event, onDelete, onUpdate }) => {
           </svg>
         </button>
       </div>
-   
     </div>
   );
 };

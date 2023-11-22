@@ -22,7 +22,7 @@ export const deleteAppointmentService = async (appointmentId) => {
 
 export const addAppointmentService = async (eventData) => {
       try {
-        const response = await axios.post(`${API_BASE_URL}/events`, eventData);
+        const response = await axios.post(`${API_BASE_URL}/api/add-appointment`, eventData);
         return response.data;
       } catch (error) {
         throw new Error('Error adding event to calendar');
