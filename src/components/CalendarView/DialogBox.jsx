@@ -67,8 +67,8 @@ const DialogBox = ({ onClose, open, openAddModal }) => {
                         Appointment
                       </Dialog.Title>
                       <div className="mt-2">
-                        <p className="text-sm text-gray-500">
-                          Are you sure you want to add appointment
+                        <p className="text-sm font-semibold text-gray-500">
+                          Are you sure you want to add an appointment
                         </p>
                       </div>
                     </div>
