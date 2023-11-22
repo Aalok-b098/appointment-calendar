@@ -3,12 +3,12 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {
   addAppointmentService,
-  getAppointmentService,
   updateAppointmentService,
 } from "../../services/api";
 import Toastify from "../Toastify/Toastify";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import SVG from "../../constant";
 
 const AddEvent = ({ closeModal, isEdit, setIsEdit, getAppointmentApiCall }) => {
   const [patientName, setPatientName] = useState("");
@@ -21,7 +21,7 @@ const AddEvent = ({ closeModal, isEdit, setIsEdit, getAppointmentApiCall }) => {
       setTitle(isEdit?.title);
       setSelectedDay(isEdit?.selectedDay);
     }
-  }, []);
+  }, [isEdit]);
 
   const handleDateChange = (date) => {
     setSelectedDay(date);
@@ -35,11 +35,11 @@ const AddEvent = ({ closeModal, isEdit, setIsEdit, getAppointmentApiCall }) => {
 
   const handleAddAppointment = async () => {
     try {
-       // Check if all required fields are filled
-       if (!patientName || !title || !selectedDay) {
+      // Check if all required fields are filled
+      if (!patientName || !title || !selectedDay) {
         toast.error("Please fill in all fields.");
         return;
-      } 
+      }
       const eventData = {
         title: title,
         patientName: patientName,
@@ -75,22 +75,8 @@ const AddEvent = ({ closeModal, isEdit, setIsEdit, getAppointmentApiCall }) => {
           class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
           data-modal-toggle="crud-modal"
         >
-          <svg
-            class="w-3 h-3"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 14 14"
-          >
-            <path
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-            />
-          </svg>
-          <span class="sr-only">Close modal</span>
+          <img src={SVG.closeSvg} width={16} height={16} alt="close" />
+          <span class="sr-only"></span>
         </button>
         <div className="mt-3 text-center">
           <div className="mx-auto flex items-center justify-center h-12 w-12 ">
@@ -100,17 +86,6 @@ const AddEvent = ({ closeModal, isEdit, setIsEdit, getAppointmentApiCall }) => {
           </div>
           <form onSubmit={handleSubmit}>
             <div className="mt-2 px-7 py-3">
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">
-                  Patient Name
-                </label>
-                <input
-                  type="text"
-                  value={patientName}
-                  onChange={(e) => setPatientName(e.target.value)}
-                  className="mt-1 p-2 block w-full rounded-md border-gray-300 bg-gray-50 dark:bg-gray-300 focus:border-green-500 focus:ring-green-500"
-                />
-              </div>
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700">
                   Title
@@ -124,6 +99,17 @@ const AddEvent = ({ closeModal, isEdit, setIsEdit, getAppointmentApiCall }) => {
               </div>
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700">
+                  Patient Name
+                </label>
+                <input
+                  type="text"
+                  value={patientName}
+                  onChange={(e) => setPatientName(e.target.value)}
+                  className="mt-1 p-2 block w-full rounded-md border-gray-300 bg-gray-50 dark:bg-gray-300 focus:border-green-500 focus:ring-green-500"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700">
                   Select Date & Time
                 </label>
                 <div className="w-full">
@@ -131,8 +117,11 @@ const AddEvent = ({ closeModal, isEdit, setIsEdit, getAppointmentApiCall }) => {
                     className="mt-1 p-2 block w-full rounded-md border-gray-300 bg-gray-50 dark:bg-gray-300 focus:border-green-500 focus:ring-green-500"
                     selected={selectedDay}
                     showTimeSelect
+                    timeFormat="HH:mm"
+                    timeIntervals={15}
+                    timeCaption="Time"
                     onChange={handleDateChange}
-                    dateFormat="dd/MM/yyyy"
+                    dateFormat="dd/MM/yyyy HH:mm"
                     isClearable
                     showYearDropdown
                     scrollableYearDropdown
@@ -147,7 +136,7 @@ const AddEvent = ({ closeModal, isEdit, setIsEdit, getAppointmentApiCall }) => {
                 type="submit"
                 className="px-4 py-2 bg-sky-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-green-300"
               >
-                  {isEdit ? "Update" : "Add"}
+                {isEdit ? "Update" : "Add"}
               </button>
               <button
                 type="button"

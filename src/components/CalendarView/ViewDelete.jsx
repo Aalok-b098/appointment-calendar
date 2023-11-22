@@ -1,13 +1,14 @@
 import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { CheckIcon } from "@heroicons/react/24/solid";
+import SVG from "../../constant";
 
 const ViewDelete = ({ onClose, open, onDelete, onEdit }) => {
   const cancelButtonRef = useRef(null);
   const onPressEdit = () => {
-    onEdit()
-    onClose()
-  }
+    onEdit();
+    onClose();
+  };
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -28,7 +29,6 @@ const ViewDelete = ({ onClose, open, onDelete, onEdit }) => {
         >
           <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
         </Transition.Child>
-
         <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
           <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
             <Transition.Child
@@ -41,6 +41,16 @@ const ViewDelete = ({ onClose, open, onDelete, onEdit }) => {
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                <button
+                  onClick={onClose}
+                  type="button"
+                  className="text-gray-400 mt-2 mx-2 bg-transparent hover:bg-gray-100 hover:text-gray-900 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white float-right"
+                  data-modal-toggle="crud-modal"
+                >
+                  <img src={SVG.closeSvg} width={16} height={16} alt="close" />
+                  <span className="sr-only">Close modal</span>
+                </button>
+
                 <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                   <div className="sm:flex sm:items-start">
                     <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10">

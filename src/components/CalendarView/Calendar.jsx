@@ -19,11 +19,10 @@ const Calendar = () => {
   const [dialogBox, setDialogBox] = useState(false);
   const [calendarWeekends, setCalendarWeekends] = useState(true);
   const [appointmentList, setAppointmentList] = useState([]);
-  const [manuallyAddAppointment, setManuallyAddAppointment] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isOpenDelete, setIsOpenDelete] = useState(false);
   const [appointmentId, setApointmentId] = useState(null);
-  const [editData,setEditData]= useState(null)
+  const [editData, setEditData] = useState(null);
   const getAppointmentApiCall = async () => {
     try {
       const eventsData = await getAppointmentService();
@@ -37,13 +36,12 @@ const Calendar = () => {
     getAppointmentApiCall();
   }, []);
 
-
   const handleOPenModal = () => {
     setIsModalOpen(true);
   };
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    setEditData(null)
+    setEditData(null);
   };
   const handleCloseDelete = () => {
     setIsOpenDelete(false);
@@ -61,14 +59,6 @@ const Calendar = () => {
   };
 
   const handleDateClick = (arg) => {
-    setManuallyAddAppointment([
-      {
-        title: null,
-        start: arg.date,
-        allDay: arg.allDay,
-        time: arg.dateStr,
-      },
-    ]);
     setDialogBox(true);
   };
 
@@ -76,8 +66,20 @@ const Calendar = () => {
     setDialogBox(false);
   };
 
-  const handleEventDrop = (info) => {
-
+  const handleEventDrop = async (info) => {
+    try {
+      const id = info.event._def.extendedProps._id;
+      const start = info.event._instance?.range?.start;
+      const data = await getParticularAppointmentService(id);
+      const apiData = {
+        ...data.data,
+        start,
+      };
+      const res = await updateAppointmentService(id, apiData);
+      toast.success(res?.message);
+    } catch (err) {
+      toast.error(err);
+    }
     const { start } = info.oldEvent._instance.range;
     const { start: newStart } = info.event._instance.range;
     if (new Date(start).getDate() === new Date(newStart).getDate()) {
@@ -90,12 +92,12 @@ const Calendar = () => {
     const eventId = info.event._def.extendedProps._id;
     setApointmentId(eventId);
   };
-  
+
   const handleEditAppointment = async () => {
     try {
       const data = await getParticularAppointmentService(appointmentId);
-      setEditData(data.data)
-      handleOPenModal()
+      setEditData(data.data);
+      handleOPenModal();
     } catch (error) {
       console.error("Error deleting appointment:", error.message);
     }
@@ -104,21 +106,30 @@ const Calendar = () => {
   const handleDeleteAppointment = async () => {
     try {
       const data = await deleteAppointmentService(appointmentId);
-      getAppointmentApiCall()
+      getAppointmentApiCall();
       setApointmentId(null);
-      handleCloseDelete()
-      toast.success(data?.message)
+      handleCloseDelete();
+      toast.success(data?.message);
     } catch (error) {
       console.error("Error deleting appointment:", error.message);
     }
   };
   return (
     <>
-
       <div className="demo-app mb-6">
         <div className="demo-app-top flex items-center justify-center gap-3">
-          <button className="bg-sky-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded" onClick={toggleWeekends}>Toggle Weekends</button>
-          <button className="bg-sky-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded" onClick={gotoPast}>Go to a date in the past</button>
+          <button
+            className="bg-sky-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded"
+            onClick={toggleWeekends}
+          >
+            Toggle Weekends
+          </button>
+          <button
+            className="bg-sky-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded"
+            onClick={gotoPast}
+          >
+            Go to a date in the past
+          </button>
           (Click week, add event and drag and drop event)
           <button
             className="bg-sky-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded"
@@ -148,6 +159,22 @@ const Calendar = () => {
             dateClick={handleDateClick}
             eventDrop={handleEventDrop}
             eventClick={handleEventRemove}
+            eventContent={(arg) => {
+              return (
+                <div
+                  className="p-2 text-white w-full"
+                  style={{
+                    backgroundColor: "#269cc8",
+                    borderRadius: "5px",
+                  }}
+                >
+                  <div>{arg.timeText}</div>
+                  <div>
+                    <b>{arg.event.title}</b>
+                  </div>
+                </div>
+              );
+            }}
           />
           {isModalOpen && (
             <AddEvent
@@ -162,7 +189,7 @@ const Calendar = () => {
               onClose={handleCloseDialogBox}
               open={dialogBox}
               openAddModal={handleOPenModal}
-              
+
             />
           )}
           {isOpenDelete && (
