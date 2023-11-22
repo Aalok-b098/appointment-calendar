@@ -3,20 +3,19 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Toastify = () => {
   return (
-    <>
-      <ToastContainer
-        theme="colored"
-        position="top-right"
-        autoClose={2000}
-        hideProgressBar={true}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
-    </>
+
+    <ToastContainer
+      theme="colored"
+      position="top-right"
+      autoClose={2000}
+      hideProgressBar={true}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+    />
   );
 };
 
