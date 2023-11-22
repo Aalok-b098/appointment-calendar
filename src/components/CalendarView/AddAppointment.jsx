@@ -27,15 +27,27 @@ const AddEvent = ({ closeModal, onEdit }) => {
 
   const handleAddAppointment = async () => {
     try {
-      const eventData = {
-        title: title,
-        patientName: patientName,
-        start: selectedDay,
-      };
-      closeModal();
-      const addedEvent = await addAppointmentService(eventData);
-      toast.success(addedEvent?.message);
-      getAppointmentService();
+      // Check if all required fields are filled
+      if (!patientName || !title || !selectedDay) {
+        toast.error("Please fill in all fields.");
+        return false;
+      } else {
+        const eventData = {
+          title: title,
+          patientName: patientName,
+          start: selectedDay,
+        };
+
+        const addedEvent = await addAppointmentService(eventData);
+
+        if (addedEvent?.success) {
+          toast.success(addedEvent?.message);
+          getAppointmentService();
+          closeModal();
+        }
+
+      }
+
     } catch (error) {
       console.error("Error adding event:", error.message);
     }
