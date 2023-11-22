@@ -6,7 +6,12 @@ import interactionPlugin from "@fullcalendar/interaction";
 import { Link } from "react-router-dom";
 import AddEvent from "./AddAppointment";
 import DialogBox from "./DialogBox";
-import { getAppointmentService } from "../../services/api";
+import {
+  deleteAppointmentService,
+  getAppointmentService,
+} from "../../services/api";
+import ViewDelete from "./ViewDelete";
+import { toast } from "react-toastify";
 
 const Calendar = () => {
   const calendarComponentRef = useRef(null);
@@ -115,28 +120,27 @@ const Calendar = () => {
     }
   ]);
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isOpenDelete, setIsOpenDelete] = useState(false);
+  const [appointmentId, setApointmentId] = useState(null);
+
   useEffect(() => {
     const getAppointmentApiCall = async () => {
       try {
         const eventsData = await getAppointmentService();
-        setAppointmentList(eventsData.data);
+        setAppointmentList(eventsData?.data?.appointments);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-
     getAppointmentApiCall();
   }, []);
-
-  const appointments = appointmentList.appointments;
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
   const handleOPenModal = () => {
     setIsModalOpen(true);
   };
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    setIsOpenDelete(false);
   };
 
   const toggleWeekends = () => {
@@ -153,7 +157,7 @@ const Calendar = () => {
   const handleDateClick = (arg) => {
     setManuallyAddAppointment([
       {
-        title: "New Event",
+        title: null,
         start: arg.date,
         allDay: arg.allDay,
         time: arg.dateStr,
@@ -167,15 +171,31 @@ const Calendar = () => {
   };
 
   const handleEventDrop = (info) => {
+    
     const { start } = info.oldEvent._instance.range;
-
     const { start: newStart } = info.event._instance.range;
-
     if (new Date(start).getDate() === new Date(newStart).getDate()) {
       info.revert();
     }
   };
 
+  const handleEventRemove = (info) => {
+    setIsOpenDelete(true);
+    const eventId = info.event._def.extendedProps._id;
+    setApointmentId(eventId);
+  };
+
+  const handleDeleteAppointment = async () => {
+    try {
+     const data = await deleteAppointmentService(appointmentId);
+      setApointmentId(null);
+      handleCloseModal()
+      getAppointmentService()
+      toast.success(data?.message)
+    } catch (error) {
+      console.error("Error deleting appointment:", error.message);
+    }
+  };
   return (
     <>
       <div className="bg-sky-500 px-4 py-2 mb-4">
@@ -223,9 +243,10 @@ const Calendar = () => {
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
             ref={calendarComponentRef}
             weekends={calendarWeekends}
-            events={calendarEvents}
+            events={appointmentList}
             dateClick={handleDateClick}
             eventDrop={handleEventDrop}
+            eventClick={handleEventRemove}
           />
           {isModalOpen && (
             <AddEvent
@@ -238,6 +259,13 @@ const Calendar = () => {
               onClose={handleCloseDialogBox}
               open={dialogBox}
               openAddModal={handleOPenModal}
+            />
+          )}
+          {isOpenDelete && (
+            <ViewDelete
+              onClose={handleCloseModal}
+              open={isOpenDelete}
+              onDelete={handleDeleteAppointment}
             />
           )}
         </div>

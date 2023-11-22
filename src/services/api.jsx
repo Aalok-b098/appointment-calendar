@@ -13,7 +13,7 @@ export const getAppointmentService = async () => {
 
 export const deleteAppointmentService = async (appointmentId) => {
     try {
-      const response = await axios.delete(`${API_BASE_URL}/appointments/${appointmentId}`);
+      const response = await axios.delete(`${API_BASE_URL}/api/delete-appointment/${appointmentId}`);
       return response.data;
     } catch (error) {
       throw new Error('Error deleting appointment');

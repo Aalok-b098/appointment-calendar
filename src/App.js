@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AppointmentCalendar from './components/CalendarView/Calendar';
 import Summary from './components/SummaryPage/Summary';
 import AddAppointment from './components/CalendarView/AddAppointment';
+import Toastify from './components/Toastify/Toastify';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
      <Route path="/addAppointment" element={<AddAppointment />} />
      
     </Routes>
+    <Toastify/>
   </Router>
   );
 }
