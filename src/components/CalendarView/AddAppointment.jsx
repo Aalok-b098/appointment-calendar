@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { addAppointmentService, getAppointmentService } from "../../services/api";
+import {
+  addAppointmentService,
+  getAppointmentService,
+} from "../../services/api";
 import Toastify from "../Toastify/Toastify";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
-const AddEvent = ({ closeModal, manuallyAddAppointment }) => {
+const AddEvent = ({ closeModal, onEdit }) => {
   const [patientName, setPatientName] = useState("");
   const [title, setTitle] = useState("");
 
@@ -32,8 +34,8 @@ const AddEvent = ({ closeModal, manuallyAddAppointment }) => {
       };
       closeModal();
       const addedEvent = await addAppointmentService(eventData);
-      toast.success(addedEvent?.message)
-      getAppointmentService()
+      toast.success(addedEvent?.message);
+      getAppointmentService();
     } catch (error) {
       console.error("Error adding event:", error.message);
     }
@@ -45,6 +47,7 @@ const AddEvent = ({ closeModal, manuallyAddAppointment }) => {
     >
       <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
         <button
+          onClick={closeModal}
           type="button"
           class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
           data-modal-toggle="crud-modal"
@@ -134,7 +137,7 @@ const AddEvent = ({ closeModal, manuallyAddAppointment }) => {
           </form>
         </div>
       </div>
-      <Toastify/>
+      <Toastify />
     </div>
   );
 };
