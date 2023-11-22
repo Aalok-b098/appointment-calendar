@@ -1,15 +1,18 @@
-import { Fragment, useRef, useState } from 'react'
-import { Dialog, Transition } from '@headlessui/react'
-import { CheckIcon } from '@heroicons/react/24/solid'
+import { Fragment, useRef, useState } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+import { CheckIcon } from "@heroicons/react/24/solid";
 
-const DialogBox = ({onClose,open}) => {
-//   const [open, setOpen] = useState(true)
-
-  const cancelButtonRef = useRef(null)
+const DialogBox = ({ onClose, open }) => {
+  const cancelButtonRef = useRef(null);
 
   return (
     <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={onClose}>
+      <Dialog
+        as="div"
+        className="relative z-10"
+        initialFocus={cancelButtonRef}
+        onClose={onClose}
+      >
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -37,10 +40,16 @@ const DialogBox = ({onClose,open}) => {
                 <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                   <div className="sm:flex sm:items-start">
                     <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10">
-                      <CheckIcon className="h-6 w-6 text-green-600" aria-hidden="true" />
+                      <CheckIcon
+                        className="h-6 w-6 text-green-600"
+                        aria-hidden="true"
+                      />
                     </div>
                     <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                      <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
+                      <Dialog.Title
+                        as="h3"
+                        className="text-base font-semibold leading-6 text-gray-900"
+                      >
                         Appointment
                       </Dialog.Title>
                       <div className="mt-2">
@@ -55,7 +64,6 @@ const DialogBox = ({onClose,open}) => {
                   <button
                     type="button"
                     className="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
-                    // onClick={() => setOpen(false)}
                   >
                     Sure
                   </button>
@@ -74,6 +82,6 @@ const DialogBox = ({onClose,open}) => {
         </div>
       </Dialog>
     </Transition.Root>
-  )
-  }
-    export default DialogBox
+  );
+};
+export default DialogBox;
