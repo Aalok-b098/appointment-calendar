@@ -46,6 +46,20 @@ const Summary = () => {
     }
   };
 
+  const groupAppointmentsByDate = (appointments) => {
+    const groupedAppointments = {};
+    appointments.forEach((appointment) => {
+      const date = formatDateString(appointment.start, 'date');
+      if (!groupedAppointments[date]) {
+        groupedAppointments[date] = [];
+      }
+      groupedAppointments[date].push(appointment);
+    });
+    return groupedAppointments;
+  };
+
+  const groupedAppointments = groupAppointmentsByDate(upcomingEventsList);
+
   return (
     <div className="mx-auto max-w-[1150px] px-4">
       <div className="font-bold text-sky-600 text-xl mt-2 mb-6">
@@ -57,32 +71,33 @@ const Summary = () => {
         ) : !upcomingEventsList ? (
           <div className="text-center max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-sky-700 dark:border-gray-700">
             <img width={35} className="mx-auto my-3 mb-6" src={SVG.noSummary} alt="loader" />
-
             <h5 className="text-center mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
               There are currently no upcoming appointments.
             </h5>
           </div>
         ) : (
-          <div className="flex flex-wrap">
-            {upcomingEventsList?.map((appointment, index) => (
-              <div className="w-3/12 px-2 mb-4" key={index}>
-                <div className="border-r border-b border-l bg-gray-400 border-gray-400 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
-                  <div className="mb-8">
-                    <div className="text-gray-900 font-bold text-lg text-sky-600 mb-2">
-                      Date and Time- {formatDateString(appointment.start)}
-                    </div>
-                  </div>
-                  <div className="flex items-center">
-                    <div className="text-sm">
-                      <p className="text-gray-900 leading-none mb-1">
-                        <strong>Patient Name -</strong>{" "}
+          <div className="flex flex-wrap flex-col items-left w-full ">
+            {Object.entries(groupedAppointments).map(([date, appointments], index) => (
+              <div key={index} className="flex flex-col items-left w-100 shadow-sm my-3 p-4 rounded-md">
+                <div className="text-gray-800 font-semibold text-md mb-2">{date}</div>
+                <div className="flex flex-wrap">
+                  {appointments.map((appointment, innerIndex) => (
+                    <div className="bg-gray-100 p-4 rounded-md shadow-md mb-5 mr-2" key={innerIndex}>
+                      <h2 className="text-sm font-semibold text-gray-800 mb-2">{appointment.title}</h2>
+                      <p className="text-gray-900 text-sm leading-none mb-1">
+                        <span>Time -</span>{" "}
+                        <span className="text-sky-600">
+                          {formatDateString(appointment.start, 'time')}
+                        </span>
+                      </p>
+                      <p className="text-gray-900 text-sm leading-none mb-1">
+                        <span>Patient Name -</span>{" "}
                         <span className="text-sky-600">
                           {appointment?.patientName}
                         </span>
                       </p>
-                      <p className="text-gray-600"></p>
                     </div>
-                  </div>
+                  ))}
                 </div>
               </div>
             ))}
