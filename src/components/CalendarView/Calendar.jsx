@@ -17,7 +17,7 @@ import { toast } from "react-toastify";
 const Calendar = () => {
   const calendarComponentRef = useRef(null);
   const [dialogBox, setDialogBox] = useState(false);
-  const [calendarWeekends, setCalendarWeekends] = useState(true);
+  const [calendarWeekends] = useState(true);
   const [appointmentList, setAppointmentList] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isOpenDelete, setIsOpenDelete] = useState(false);
@@ -45,17 +45,6 @@ const Calendar = () => {
   };
   const handleCloseDelete = () => {
     setIsOpenDelete(false);
-  };
-
-  const toggleWeekends = () => {
-    setCalendarWeekends(!calendarWeekends);
-  };
-
-  const gotoPast = () => {
-    if (calendarComponentRef.current) {
-      const calendarApi = calendarComponentRef.current.getApi();
-      calendarApi.gotoDate("2000-01-01");
-    }
   };
 
   const handleDateClick = (arg) => {
@@ -117,20 +106,7 @@ const Calendar = () => {
   return (
     <>
       <div className="demo-app mb-6">
-        <div className="demo-app-top flex items-center justify-center gap-3">
-          <button
-            className="bg-sky-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded"
-            onClick={toggleWeekends}
-          >
-            Toggle Weekends
-          </button>
-          <button
-            className="bg-sky-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded"
-            onClick={gotoPast}
-          >
-            Go to a date in the past
-          </button>
-          (Click week, add event and drag and drop event)
+        <div className="mx-auto max-w-[1150px] mb-6 text-right">
           <button
             className="bg-sky-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded"
             onClick={handleOPenModal}

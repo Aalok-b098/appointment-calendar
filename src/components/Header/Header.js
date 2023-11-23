@@ -13,8 +13,6 @@ const Header = () => {
         navigate("/summary");
     }
 
-    const showBackButton = location.pathname === '/summary';
-
     return (
         <div className="bg-sky-500 px-4 py-2 mb-4">
             <div className="mx-auto max-w-[1150px] px-4">
@@ -23,20 +21,15 @@ const Header = () => {
                         Calendar
                     </button>
                     <div className="flex justify-end gap-2">
-                        {showBackButton ? (
-                            <button onClick={() => navigate(-1)} className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-                                Back
-                            </button>
-                        ) : (
-                            <button
-                                onClick={navigateToSummary}
-                                className={`bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ${
-                                    location.pathname === '/summary' ? 'bg-green-700' : ''
+
+                        <button
+                            onClick={navigateToSummary}
+                            className={`bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ${location.pathname === '/summary' ? 'bg-green-700' : ''
                                 }`}
-                            >
-                                Summary
-                            </button>
-                        )}
+                        >
+                            Summary
+                        </button>
+
                     </div>
                 </div>
             </div>
