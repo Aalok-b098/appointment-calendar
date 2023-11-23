@@ -63,7 +63,7 @@ const Summary = () => {
   return (
     <div className="mx-auto max-w-[1150px] px-4">
       <div className="font-bold text-sky-600 text-xl mt-2 mb-6">
-        Upcoming Appointments
+        Upcoming appointments
       </div>
       <div className="flex flex-col items-center">
         {upcomingEventsList?.length === 0 ? (
@@ -91,7 +91,7 @@ const Summary = () => {
                         </span>
                       </p>
                       <p className="text-gray-900 text-sm leading-none mb-1">
-                        <span>Patient Name -</span>{" "}
+                        <span>Patient name -</span>{" "}
                         <span className="text-sky-600">
                           {appointment?.patientName}
                         </span>

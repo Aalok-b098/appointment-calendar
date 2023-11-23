@@ -23,7 +23,7 @@ const Header = () => {
             className="font-bold text-xl text-white flex"
           >
             <img src={SVG.calendarIcon} alt="calendar icon" width={25} height={25} className="mx-3" />
-            Schedule Appointment
+            Schedule appointment
           </button>
           <div className="flex justify-end gap-2">
             <button

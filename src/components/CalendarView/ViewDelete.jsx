@@ -67,8 +67,8 @@ const ViewDelete = ({ onClose, open, onDelete, onEdit }) => {
                         Appointment
                       </Dialog.Title>
                       <div className="mt-2">
-                        <p className="text-sm font-semibold text-gray-500">
-                          You want to Edit or Delete this appointment
+                        <p className="text-sm font-normal text-gray-500">
+                          You want to edit or delete this appointment
                         </p>
                       </div>
                     </div>

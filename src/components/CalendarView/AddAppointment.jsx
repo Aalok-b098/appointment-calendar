@@ -81,7 +81,7 @@ const AddEvent = ({ closeModal, isEdit, setIsEdit, getAppointmentApiCall }) => {
         <div className="mt-3 text-center">
           <div className="mx-auto flex items-center justify-center h-12 w-100 ">
             <h3 className="text-lg text-gray-400 font-semibold text-sky-700 font-medium text-gray-900">
-              {isEdit ? "Edit Appointment" : "Add Appointment"}
+              {isEdit ? "Edit appointment" : "Add appointment"}
             </h3>
           </div>
           <form onSubmit={handleSubmit}>
@@ -99,7 +99,7 @@ const AddEvent = ({ closeModal, isEdit, setIsEdit, getAppointmentApiCall }) => {
               </div>
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700 float-left font-semibold mb-1">
-                  Patient Name
+                  Patient name
                 </label>
                 <input
                   type="text"
@@ -110,7 +110,7 @@ const AddEvent = ({ closeModal, isEdit, setIsEdit, getAppointmentApiCall }) => {
               </div>
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700 float-left font-semibold mb-1">
-                  Select Date & Time
+                  Select date & time
                 </label>
                 <div className="w-full">
                   <DatePicker
