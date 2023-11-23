@@ -18,7 +18,7 @@ const Header = () => {
             <div className="mx-auto max-w-[1150px] px-4">
                 <div className="flex items-center justify-between">
                     <button onClick={navigateToHome} className="font-bold text-xl text-white">
-                        Calendar
+                        Schedule Appointment
                     </button>
                     <div className="flex justify-end gap-2">
 
