@@ -72,22 +72,22 @@ const AddEvent = ({ closeModal, isEdit, setIsEdit, getAppointmentApiCall }) => {
         <button
           onClick={closeModal}
           type="button"
-          class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+          class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-300 dark:hover:text-white float-right"
           data-modal-toggle="crud-modal"
         >
           <img src={SVG.closeSvg} width={16} height={16} alt="close" />
           <span class="sr-only"></span>
         </button>
         <div className="mt-3 text-center">
-          <div className="mx-auto flex items-center justify-center h-12 w-12 ">
-            <h3 className="text-lg font-medium text-gray-900">
+          <div className="mx-auto flex items-center justify-center h-12 w-100 ">
+            <h3 className="text-lg text-gray-400 font-semibold text-sky-700 font-medium text-gray-900">
               {isEdit ? "Edit Appointment" : "Add Appointment"}
             </h3>
           </div>
           <form onSubmit={handleSubmit}>
             <div className="mt-2 px-7 py-3">
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">
+                <label className="block text-sm font-medium text-gray-700 float-left font-semibold mb-1">
                   Title
                 </label>
                 <input
@@ -98,7 +98,7 @@ const AddEvent = ({ closeModal, isEdit, setIsEdit, getAppointmentApiCall }) => {
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">
+                <label className="block text-sm font-medium text-gray-700 float-left font-semibold mb-1">
                   Patient Name
                 </label>
                 <input
@@ -109,7 +109,7 @@ const AddEvent = ({ closeModal, isEdit, setIsEdit, getAppointmentApiCall }) => {
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">
+                <label className="block text-sm font-medium text-gray-700 float-left font-semibold mb-1">
                   Select Date & Time
                 </label>
                 <div className="w-full">
@@ -132,18 +132,18 @@ const AddEvent = ({ closeModal, isEdit, setIsEdit, getAppointmentApiCall }) => {
             </div>
             <div className="items-center flex gap-2 px-4 py-3">
               <button
-                onClick={handleAddAppointment}
-                type="submit"
-                className="px-4 py-2 bg-sky-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-green-300"
-              >
-                {isEdit ? "Update" : "Add"}
-              </button>
-              <button
                 type="button"
                 onClick={closeModal}
                 className="px-4 py-2 bg-red-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-300"
               >
                 Close
+              </button>
+              <button
+                onClick={handleAddAppointment}
+                type="submit"
+                className="px-4 py-2 bg-sky-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-green-300"
+              >
+                {isEdit ? "Update" : "Add"}
               </button>
             </div>
           </form>

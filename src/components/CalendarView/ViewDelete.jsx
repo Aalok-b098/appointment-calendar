@@ -44,18 +44,18 @@ const ViewDelete = ({ onClose, open, onDelete, onEdit }) => {
                 <button
                   onClick={onClose}
                   type="button"
-                  className="text-gray-400 mt-2 mx-2 bg-transparent hover:bg-gray-100 hover:text-gray-900 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white float-right"
+                  className="text-gray-400 mt-2 mx-2 bg-transparent hover:bg-gray-100 hover:text-gray-900 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center dark:hover:bg-gray-200 dark:hover:text-white float-right"
                   data-modal-toggle="crud-modal"
                 >
-                  <img src={SVG.closeSvg} width={16} height={16} alt="close" />
+                  <img src={SVG.closeSvg} width={14} height={14} alt="close" />
                   <span className="sr-only">Close modal</span>
                 </button>
 
                 <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                   <div className="sm:flex sm:items-start">
-                    <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10">
+                    <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-sky-100 sm:mx-0 sm:h-10 sm:w-10">
                       <CheckIcon
-                        className="h-6 w-6 text-green-600"
+                        className="h-6 w-6 text-sky-600"
                         aria-hidden="true"
                       />
                     </div>
@@ -68,7 +68,7 @@ const ViewDelete = ({ onClose, open, onDelete, onEdit }) => {
                       </Dialog.Title>
                       <div className="mt-2">
                         <p className="text-sm font-semibold text-gray-500">
-                          Are you sure you want to Edit ot Delete this appointment
+                          You want to Edit or Delete this appointment
                         </p>
                       </div>
                     </div>
@@ -78,13 +78,13 @@ const ViewDelete = ({ onClose, open, onDelete, onEdit }) => {
                   <button
                     onClick={onPressEdit}
                     type="button"
-                    className="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+                    className="inline-flex bg-sky-600 w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-sky-700 sm:ml-3 sm:w-auto"
                   >
                     Edit
                   </button>
                   <button
                     type="button"
-                    className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                    className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold hover:text-white  text-gray-900 hover:bg-red-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
                     onClick={onDelete}
                     ref={cancelButtonRef}
                   >

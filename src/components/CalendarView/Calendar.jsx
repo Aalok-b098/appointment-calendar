@@ -48,7 +48,14 @@ const Calendar = () => {
   };
 
   const handleDateClick = (arg) => {
-    setDialogBox(true);
+    const today = new Date();
+    const clickedDate = new Date(arg.date);
+
+    if (clickedDate < today) {
+      toast.error("Cannot add an appointment for past dates");
+    } else {
+      setDialogBox(true);
+    }
   };
 
   const handleCloseDialogBox = (arg) => {
@@ -127,6 +134,11 @@ const Calendar = () => {
               left: "prev,next today",
               center: "title",
               right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek",
+            }}
+            eventTimeFormat={{
+              hour: "numeric",
+              minute: "2-digit",
+              meridiem: "short",
             }}
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
             ref={calendarComponentRef}
